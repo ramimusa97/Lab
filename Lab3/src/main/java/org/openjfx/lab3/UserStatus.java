@@ -1,28 +1,26 @@
 package org.openjfx.lab3;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 // Tracks failed login attempts and lockout time for a single user (email).
+// All compound operations must be guarded by getLock() at the call site.
 public class UserStatus {
 
+    private final Lock lock = new ReentrantLock();
+
     private int failedAttempts = 0;
-    private Long lockedAt = null; // null means not locked; otherwise epoch millis of lock time
+    private Long lockedAt = null; // null = not locked; otherwise epoch millis of lock time
 
-    public synchronized void incrementFailed() {
-        failedAttempts++;
-    }
+    public Lock getLock() { return lock; }
 
-    public synchronized int getFailedAttempts() {
-        return failedAttempts;
-    }
+    public void incrementFailed() { failedAttempts++; }
+    public int getFailedAttempts() { return failedAttempts; }
 
-    public synchronized void lock() {
-        lockedAt = System.currentTimeMillis();
-    }
+    public void setLockedAt(long timestamp) { lockedAt = timestamp; }
+    public Long getLockedAt() { return lockedAt; }
 
-    public synchronized Long getLockedAt() {
-        return lockedAt;
-    }
-
-    public synchronized void reset() {
+    public void reset() {
         failedAttempts = 0;
         lockedAt = null;
     }

@@ -1,5 +1,7 @@
 package org.openjfx.lab3;
 
+import java.util.concurrent.locks.Lock;
+
 // Thread A: increments the failed attempt count for the given email.
 // If the count reaches maxAttempts, locks the user.
 public class FailedAttemptThread extends Thread {
@@ -16,12 +18,17 @@ public class FailedAttemptThread extends Thread {
     @Override
     public void run() {
         UserStatus status = authState.getOrCreate(email);
-        synchronized (status) {
+        Lock lock = status.getLock();
+        lock.lock();
+        try {
+            if (status.getLockedAt() != null) return; // already locked — ignore
             status.incrementFailed();
             if (status.getFailedAttempts() >= authState.getMaxAttempts()) {
-                status.lock();
+                status.setLockedAt(System.currentTimeMillis());
                 justLocked = true;
             }
+        } finally {
+            lock.unlock();
         }
     }
 

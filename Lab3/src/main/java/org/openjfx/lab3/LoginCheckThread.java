@@ -1,5 +1,7 @@
 package org.openjfx.lab3;
 
+import java.util.concurrent.locks.Lock;
+
 // Thread B: given correct credentials, checks whether the user is currently locked.
 // If the lockout period has expired, resets the user's status automatically.
 public class LoginCheckThread extends Thread {
@@ -17,7 +19,9 @@ public class LoginCheckThread extends Thread {
     @Override
     public void run() {
         UserStatus status = authState.getOrCreate(email);
-        synchronized (status) {
+        Lock lock = status.getLock();
+        lock.lock();
+        try {
             Long lockedAt = status.getLockedAt();
             if (lockedAt == null) {
                 allowed = true;
@@ -32,6 +36,8 @@ public class LoginCheckThread extends Thread {
                     allowed = false;
                 }
             }
+        } finally {
+            lock.unlock();
         }
     }
 
