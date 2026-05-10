@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="260.0" prefWidth="340.0"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.openjfx.lab3.ParameterController">
+
+    <Label text="Login Setup"
+           layoutX="100.0" layoutY="20.0"
+           style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+    <Label text="Max failed attempts (n):"
+           layoutX="30.0" layoutY="70.0"/>
+    <TextField fx:id="nField"
+               layoutX="200.0" layoutY="66.0" prefWidth="110.0"
+               promptText="e.g. 3"/>
+
+    <Label text="Lockout duration in seconds (t):"
+           layoutX="30.0" layoutY="115.0"/>
+    <TextField fx:id="tField"
+               layoutX="200.0" layoutY="111.0" prefWidth="110.0"
+               promptText="e.g. 30"/>
+
+    <Label fx:id="errorLabel"
+           layoutX="30.0" layoutY="150.0" prefWidth="280.0"
+           style="-fx-text-fill: red; -fx-alignment: center;"
+           visible="false"/>
+
+    <Button text="Start"
+            layoutX="130.0" layoutY="185.0" prefWidth="80.0"
+            onAction="#onStartButtonClick"/>
+
+</AnchorPane>
