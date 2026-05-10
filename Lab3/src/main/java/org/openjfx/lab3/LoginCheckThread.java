@@ -14,6 +14,7 @@ public class LoginCheckThread extends Thread {
     public LoginCheckThread(String email, AuthState authState) {
         this.email = email;
         this.authState = authState;
+        setName("LoginCheckThread-" + email);
     }
 
     @Override

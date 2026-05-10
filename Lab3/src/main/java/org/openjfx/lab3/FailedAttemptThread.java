@@ -13,6 +13,7 @@ public class FailedAttemptThread extends Thread {
     public FailedAttemptThread(String email, AuthState authState) {
         this.email = email;
         this.authState = authState;
+        setName("FailedAttemptThread-" + email);
     }
 
     @Override
