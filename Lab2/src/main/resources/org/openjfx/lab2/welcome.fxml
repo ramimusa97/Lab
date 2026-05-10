@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="200.0" prefWidth="350.0"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.openjfx.lab2.WelcomeController">
+
+    <!-- Welcome message, set dynamically by WelcomeController -->
+    <Label fx:id="welcomeLabel"
+           layoutX="50.0" layoutY="80.0" prefWidth="250.0"
+           style="-fx-font-size: 18; -fx-font-weight: bold; -fx-alignment: center;"/>
+
+</AnchorPane>
